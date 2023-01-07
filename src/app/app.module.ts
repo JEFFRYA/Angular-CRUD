@@ -14,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCommonModule } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MatIconModule } from '@angular/material/icon'
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -36,7 +37,8 @@ import { AppComponent } from './app.component';
     MatTableModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    MatCommonModule
+    MatCommonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
