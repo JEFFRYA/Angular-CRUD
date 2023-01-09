@@ -28,12 +28,12 @@ export class EmployeeService {
     return this.http.post<Employee>( `${this.apiUrl}/employee/save`, employee );
   }
 
-  update( IdEmployee:number, employee:Employee ): Observable<Employee> {
-    return this.http.put<Employee>( `${this.apiUrl}/employee/update/${IdEmployee}`, employee );
+  update( idTEmployee:number, employee:Employee ): Observable<Employee> {
+    return this.http.put<Employee>( `${this.apiUrl}/employee/update/${idTEmployee}`, employee );
   }
 
-  delete( IdEmployee:number ): Observable<void> {
-    return this.http.delete<void>( `${this.apiUrl}/employee/delete/${IdEmployee}` );
+  delete( idTEmployee:number ): Observable<void> {
+    return this.http.delete<void>( `${this.apiUrl}/employee/delete/${idTEmployee}` );
   }
 
 }

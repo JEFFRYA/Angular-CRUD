@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Interfaces
@@ -29,7 +29,8 @@ export class ModalAddEditComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _departmentService: DepartmentService,
-    private _employeeService: EmployeeService
+    private _employeeService: EmployeeService,
+    @Inject(MAT_DIALOG_DATA) public dataEmployee:Employee
   )
   {
     
@@ -45,16 +46,29 @@ export class ModalAddEditComponent implements OnInit {
       next:( data ) => {
         
         this.departmentsList = data
-        console.log( this.departmentsList );
+        
       },
       error:( error ) => { console.log(error); }
     });
 
   }
 
-  ngOnInit() {
+  ngOnInit():void {
+    
+    if (this.dataEmployee) {
+      
+      console.log(this.dataEmployee);
 
-    // this.addEditEmployee();
+      this.formEmployee.patchValue({
+        FullName: this.dataEmployee.fullName,
+        Salary: this.dataEmployee.salary,
+        IdDepartment: this.dataEmployee.idFDepartment
+      });
+
+      this.actionTitle = "Edit";
+      this.actionButton = "Update"
+
+    }
 
   }
 
@@ -74,8 +88,6 @@ export class ModalAddEditComponent implements OnInit {
 
   addEditEmployee() {
 
-    // console.log( this.formEmployee.value );
-
     const employee:Employee = {
       idTEmployee: 0,
       fullName: this.formEmployee.value.FullName,
@@ -83,22 +95,41 @@ export class ModalAddEditComponent implements OnInit {
       salary: this.formEmployee.value.Salary
     }
 
-    console.log( employee );
+    if (this.dataEmployee == null) {
     
-    this._employeeService.add(employee).subscribe({
+      this._employeeService.add(employee).subscribe({
 
-      next:( data ) => {
+        next:( data ) => {
+  
+          this.showAlert("Successfully created employee","Done!");
+          this._dialogReference.close("Created");
+  
+        },
+        error:( error ) => {
+          console.log( error );
+          this.showAlert("Could not create employee","Error!");
+        }
+  
+      });
 
-        this.showAlert("Successfully created employee","Done!");
-        this._dialogReference.close("Created");
+    } else {
+      console.log(employee);
+      this._employeeService.update( this.dataEmployee.idTEmployee, employee ).subscribe({
 
-      },
-      error:( error ) => {
-        console.log( error );
-        this.showAlert("Could not create employee","Done!");
-      }
+        next:( data ) => {
+  
+          this.showAlert("Successfully edited employee","Done!");
+          this._dialogReference.close("Edited");
+  
+        },
+        error:( error ) => {
+          console.log( error );
+          this.showAlert("Could not edited employee","Error!");
+        }
+  
+      });
 
-    })
+    }
 
   }
 

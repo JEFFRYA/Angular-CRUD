@@ -52,7 +52,6 @@ export class AppComponent implements AfterViewInit, OnInit {
   ShowEmployees() {
     this._employeeService.getList().subscribe( {
       next: ( data ) => {
-        console.log( data );
         this.dataSource.data = data;
       },
       error: ( error ) => { console.log(error); }
@@ -68,6 +67,21 @@ export class AppComponent implements AfterViewInit, OnInit {
       }
     ).afterClosed().subscribe( result => {
       if(result === "Created") {
+        this.ShowEmployees();
+      }
+    });
+  }
+
+  editEmployee(employee: Employee) {
+    this.dialog.open(
+      ModalAddEditComponent,
+      {
+        disableClose: true,
+        width: "350px",
+        data: employee
+      }
+    ).afterClosed().subscribe( result => {
+      if(result === "Edited") {
         this.ShowEmployees();
       }
     });
