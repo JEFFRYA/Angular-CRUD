@@ -18,11 +18,15 @@ import { MatIconModule } from '@angular/material/icon'
 
 // Componentes
 import { AppComponent } from './app.component';
-
+import { ModalAddEditComponent } from './components/employee/modal-add-edit/modal-add-edit.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ModalAddEditComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,10 @@ import { AppComponent } from './app.component';
     MatPaginatorModule,
     MatDatepickerModule,
     MatCommonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    MatGridListModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

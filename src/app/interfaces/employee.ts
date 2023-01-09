@@ -1,7 +1,7 @@
 export interface Employee {
-    IdEmployee: number,
-    FullName: string,
-    IdDepartment: number,
-    NameDepartment?: string,
-    Salary: number
+    idTEmployee: number,
+    fullName: string,
+    idFDepartment: number,
+    nameDepartment?: string,
+    salary: number
 }

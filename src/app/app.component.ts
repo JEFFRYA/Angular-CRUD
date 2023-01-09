@@ -1,12 +1,16 @@
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
-// interfaz
+// Interfaz
 import { Employee } from './interfaces/employee';
 
 // Servicio
 import { EmployeeService } from './services/employee.service';
+
+// Componente
+import { ModalAddEditComponent } from './components/employee/modal-add-edit/modal-add-edit.component';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +23,10 @@ export class AppComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['FullName', 'NameDepartment', 'Salary', 'Actions'];
   dataSource = new MatTableDataSource<Employee>();
 
-  constructor(private _employeeService: EmployeeService) {
-  }
+  constructor(
+    private _employeeService: EmployeeService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.ShowEmployees();
@@ -49,13 +55,25 @@ export class AppComponent implements AfterViewInit, OnInit {
         console.log( data );
         this.dataSource.data = data;
       },
-      error: (e) => {}
+      error: ( error ) => { console.log(error); }
+    });
+  }
+
+  addEmployee() {
+    this.dialog.open(
+      ModalAddEditComponent,
+      {
+        disableClose: true,
+        width: "350px"
+      }
+    ).afterClosed().subscribe( result => {
+      if(result === "Created") {
+        this.ShowEmployees();
+      }
     });
   }
 
 }
-
-
 
 /**
  * @title Table with pagination, filter

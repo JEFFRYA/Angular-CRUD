@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>{{ actionTitle }} Employee </h1>
+<div mat-dialog-content>
+  <form [formGroup]="formEmployee">
+
+    <mat-grid-list cols="1" rowHeight="80px">
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>FullName</mat-label>
+          <input matInput formControlName="FullName" autocomplete="off">
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="IdDepartment">
+            <mat-option *ngFor="let item of departmentsList" [value]="item.idTDepartment">
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Salary</mat-label>
+          <input matInput type="number" class="example-right-align" formControlName="Salary" autocomplete="off">
+          <!-- <span matTextPrefix>$&nbsp;</span> -->
+          <!-- <span matTextSuffix>0.00</span> -->
+        </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="warn">Close</button>
+  <button mat-raised-button color="primary" (click)="addEditEmployee()" [disabled]="formEmployee.invalid">
+    {{ actionButton }}
+  </button>
+</div>

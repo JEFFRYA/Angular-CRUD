@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <h2>Employees List</h2>
-
+    <button mat-raised-button color="primary" (click)="addEmployee()">Add New Employee</button>
     <mat-form-field>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Smeeth" #input>

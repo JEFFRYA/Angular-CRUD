@@ -14,14 +14,14 @@ import { Department } from '../interfaces/department';
 
 export class DepartmentService {
 
-  private apiUrl:string = environment.apiUrl + 'department/list';
+  private apiUrl:string = environment.apiUrl + '/department/list';
 
   constructor(private http:HttpClient) {
 
   }
 
-  getList(): Observable<Department> {
-    return this.http.get<Department>(this.apiUrl);
+  getList(): Observable<Department[]> {
+    return this.http.get<Department[]>(this.apiUrl);
   }
 
 }
