@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Interfaz
 import { Employee } from './interfaces/employee';
@@ -11,6 +12,7 @@ import { EmployeeService } from './services/employee.service';
 
 // Componente
 import { ModalAddEditComponent } from './components/employee/modal-add-edit/modal-add-edit.component';
+import { ModalDeleteComponent } from './components/employee/modal-delete/modal-delete.component'
 
 @Component({
   selector: 'app-root',
@@ -25,7 +27,8 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   constructor(
     private _employeeService: EmployeeService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar:MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -85,6 +88,47 @@ export class AppComponent implements AfterViewInit, OnInit {
         this.ShowEmployees();
       }
     });
+  }
+
+  deleteEmployee(employee: Employee) {
+    this.dialog.open(
+      ModalDeleteComponent,
+      {
+        disableClose: true,
+        data: employee
+      }
+    ).afterClosed().subscribe( result => {
+
+      if(result === "Delete") {
+
+        this._employeeService.delete(employee.idTEmployee).subscribe({
+          next:( result ) => {
+            this.showAlert("Successfully deleted employee","Done!");
+          }, 
+          error:( error ) => {
+          // console.log( error );
+          this.showAlert("Could not deleted employee","Error!");
+        }
+        });
+
+        this.ShowEmployees();
+      }
+
+    });
+  }
+
+  showAlert(message: string, action: string) {
+
+    this._snackBar.open(
+      message,
+      action, 
+      { 
+        horizontalPosition:"center",
+        verticalPosition:"top",
+        duration: 3000
+      }
+    );
+
   }
 
 }

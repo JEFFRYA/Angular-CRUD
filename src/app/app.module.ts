@@ -21,12 +21,14 @@ import { AppComponent } from './app.component';
 import { ModalAddEditComponent } from './components/employee/modal-add-edit/modal-add-edit.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ModalDeleteComponent } from './components/employee/modal-delete/modal-delete.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    ModalAddEditComponent
+    ModalAddEditComponent,
+    ModalDeleteComponent
   ],
   imports: [
     BrowserModule,

@@ -106,7 +106,7 @@ export class ModalAddEditComponent implements OnInit {
   
         },
         error:( error ) => {
-          console.log( error );
+          // console.log( error );
           this.showAlert("Could not create employee","Error!");
         }
   
